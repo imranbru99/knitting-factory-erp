@@ -38,7 +38,23 @@ class SiteController extends Controller
 
     public function home(Request $request): View
     {
-        return $this->show($request, 'home');
+        $page = $this->pages['home'];
+        if (Schema::hasTable('cms_pages')) {
+            $stored = CmsPage::query()->where('slug', 'home')->where('status', 'published')->first();
+            if ($stored instanceof CmsPage) {
+                $page = [
+                    'title' => $stored->title,
+                    'title_bn' => $stored->title_bn ?: $page['title_bn'],
+                    'body' => $stored->body ?: $page['body'],
+                ];
+            }
+        }
+
+        return view('site.home', [
+            'locale' => $this->locale($request),
+            'page' => $page,
+            'landing' => true,
+        ]);
     }
 
     public function page(Request $request, string $slug): View

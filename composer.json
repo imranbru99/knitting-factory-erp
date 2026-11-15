@@ -5,6 +5,13 @@
     "description": "Knitting factory ERP and public website for composite, job-work, and dyeing units.",
     "keywords": ["laravel", "framework"],
     "license": "MIT",
+    "authors": [
+        {
+            "name": "Imran Ahmed",
+            "email": "me@imrandev.bd",
+            "homepage": "https://imrandev.bd"
+        }
+    ],
     "require": {
         "php": "^8.2",
         "filament/filament": "^4.0",
