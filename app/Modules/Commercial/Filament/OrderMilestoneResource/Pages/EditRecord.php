@@ -1,0 +1,19 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Modules\Commercial\Filament\OrderMilestoneResource\Pages;
+
+use App\Modules\Commercial\Filament\OrderMilestoneResource;
+use Filament\Actions\DeleteAction;
+use Filament\Resources\Pages\EditRecord as EditRecordPage;
+
+class EditRecord extends EditRecordPage
+{
+    protected static string $resource = OrderMilestoneResource::class;
+
+    protected function getHeaderActions(): array
+    {
+        return [DeleteAction::make()];
+    }
+}

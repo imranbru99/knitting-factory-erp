@@ -1,0 +1,109 @@
+{
+    "$schema": "https://getcomposer.org/schema.json",
+    "name": "knitting-factory/erp",
+    "type": "project",
+    "description": "Knitting factory ERP and public website for composite, job-work, and dyeing units.",
+    "keywords": ["laravel", "framework"],
+    "license": "MIT",
+    "require": {
+        "php": "^8.2",
+        "filament/filament": "^4.0",
+        "imrandevbd/drutogoti": "dev-main#6c5b4c94bf42e350d5b06c88736dcbf2b8e199f1",
+        "imrandevbd/laravel-admin-panel": "dev-main#b5c39918d7241ecb49986631b6a9a0bbd69000d7",
+        "imrandevbd/laravel-ai-catalog": "dev-main#07b5783f3ec08ed61cad9c1ea3439ae9b4e15c25",
+        "imrandevbd/laravel-ai-hub": "^1.7.3",
+        "imrandevbd/laravel-ai-ocr": "^1.1",
+        "imrandevbd/laravel-attendance-hub": "dev-main#7bd5a7b4a9b27687e9c060a17544fe359d6ce74c",
+        "imrandevbd/laravel-filament-master": "dev-main#4b77a7d76b6c10d2bc1a5588e4eb380a5aebcd40",
+        "imrandevbd/laravel-unicode-pdf": "dev-main#3dc97d3a6fdd0441ac41dce1a584d8a78b106c76",
+        "imrandevbd/laravel-universal-slug": "dev-main#9fdcf1659a514e94e7ac58b17ec783e73003fb7b",
+        "imrandevbd/tarikh": "dev-main#1482e83c71fd9b885e88e0db02dbab0dffd1a6fd",
+        "laravel/framework": "^12.0",
+        "laravel/horizon": "^5.30",
+        "laravel/reverb": "^1.5",
+        "laravel/sanctum": "^4.0",
+        "laravel/tinker": "^2.10.1",
+        "openspout/openspout": "^4.28",
+        "pragmarx/google2fa": "^8.0",
+        "spatie/laravel-activitylog": "^4.10"
+    },
+    "require-dev": {
+        "fakerphp/faker": "^1.23",
+        "laravel/pail": "^1.2.2",
+        "laravel/pint": "^1.24",
+        "laravel/sail": "^1.41",
+        "mockery/mockery": "^1.6",
+        "nunomaduro/collision": "^8.6",
+        "larastan/larastan": "^3.0",
+        "pestphp/pest": "^4.7",
+        "pestphp/pest-plugin-laravel": "^4.0",
+        "phpunit/phpunit": "^12.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "setup": [
+            "composer install",
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
+            "@php artisan key:generate",
+            "@php artisan migrate --force",
+            "npm install",
+            "npm run build"
+        ],
+        "dev": [
+            "Composer\\Config::disableProcessTimeout",
+            "npx concurrently -c \"#93c5fd,#c4b5fd,#fb7185,#fdba74\" \"php artisan serve\" \"php artisan queue:listen --tries=1 --timeout=0\" \"php artisan pail --timeout=0\" \"npm run dev\" --names=server,queue,logs,vite --kill-others"
+        ],
+        "test": [
+            "@php artisan config:clear --ansi",
+            "@php artisan test"
+        ],
+        "post-autoload-dump": [
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+            "@php artisan package:discover --ansi"
+        ],
+        "post-update-cmd": [
+            "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
+        ],
+        "post-root-package-install": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ],
+        "post-create-project-cmd": [
+            "@php artisan key:generate --ansi",
+            "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
+            "@php artisan migrate --graceful --ansi"
+        ],
+        "pre-package-uninstall": [
+            "Illuminate\\Foundation\\ComposerScripts::prePackageUninstall"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "dont-discover": [
+                "imrandevbd/tarikh",
+                "imrandevbd/laravel-filament-master"
+            ]
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "php-http/discovery": true
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

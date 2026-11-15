@@ -1,0 +1,8 @@
+{
+    "name": "Gazipur Knit floor",
+    "short_name": "Knit floor",
+    "start_url": "/floor",
+    "display": "standalone",
+    "background_color": "#faf7f2",
+    "theme_color": "#115e59"
+}
